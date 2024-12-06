@@ -13,6 +13,8 @@ import ProItemList from './comp/pro/ItemList'
 
 import Ax1 from './comp/ax/ax01'
 
+// 12.06 이후 추가
+import BoardList from './comp/board/BoardList'
 function App() {
   return (
     <div className="App">
@@ -32,7 +34,10 @@ function App() {
           <Route path={"/itemList"} element={<ProItemList />} />
 
           <Route path={"/ax1"} element={<Ax1 />} />
-        </Routes>
+
+          {/* 12.06 게시판 기능 추가 */}
+          <Route path={"/boardList"} element={<BoardList />} />
+          </Routes>
       </BrowserRouter>
     </div>
   );
@@ -63,8 +68,14 @@ function Home() {
 
       <h4>기능</h4>
       <Link to="/pro1">회원가입 창</Link><br/>
-      <Link to="/login">로그인</Link>
-      <Link to="/itemList">아이템 리스트</Link>
+      <Link to="/login">로그인</Link><br/>
+      <Link to="/itemList">아이템 리스트</Link><br/>
+
+      {/* 게시판 기능 링크 추가 */}
+      <h3>게시판 기능</h3>
+      <Link to="/boardList">게시판</Link>
+
+
     </div>
   )
 }
