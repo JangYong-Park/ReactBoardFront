@@ -15,7 +15,9 @@ import Ax1 from './comp/ax/ax01'
 
 // 12.06 이후 추가
 import BoardList from './comp/board/BoardList'
-import BoardRegist from './comp/board/BoardRegist';
+import BoardRegist from './comp/board/BoardRegist'
+import BoardDetail from './comp/board/BoardDetail';
+
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
           {/* 12.06 게시판 기능 추가 */}
           <Route path={"/boardList"} element={<BoardList />} />
           <Route path={"/boardRegist"} element={<BoardRegist />} />
+          <Route path="/boardDetail/:boardId" element={<BoardDetail />} />
+
           </Routes>
       </BrowserRouter>
     </div>
