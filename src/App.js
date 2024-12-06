@@ -15,6 +15,8 @@ import Ax1 from './comp/ax/ax01'
 
 // 12.06 이후 추가
 import BoardList from './comp/board/BoardList'
+import BoardRegist from './comp/board/BoardRegist';
+
 function App() {
   return (
     <div className="App">
@@ -37,6 +39,7 @@ function App() {
 
           {/* 12.06 게시판 기능 추가 */}
           <Route path={"/boardList"} element={<BoardList />} />
+          <Route path={"/boardRegist"} element={<BoardRegist />} />
           </Routes>
       </BrowserRouter>
     </div>
@@ -73,7 +76,8 @@ function Home() {
 
       {/* 게시판 기능 링크 추가 */}
       <h3>게시판 기능</h3>
-      <Link to="/boardList">게시판</Link>
+      <Link to="/boardList">게시판</Link> <br/>
+      <Link to="/boardRegist">게시글 등록</Link>
 
 
     </div>
