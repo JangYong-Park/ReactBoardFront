@@ -1,0 +1,36 @@
+.boardListContainer {
+    margin: 0 20px;
+  }
+  
+  .boardListHeader {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .boardTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .boardTable th, .boardTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .boardTable th {
+    background-color: #f2f2f2;
+  }
+  
+  .logoutButton {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .logoutButton:hover {
+    background-color: #ff7875;
+  }
+  

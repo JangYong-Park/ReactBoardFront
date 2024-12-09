@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import styles from './BoardList.module.css';
 
 function BoardList() {
   const [boards, setBoards] = useState([]);
@@ -31,10 +32,18 @@ function BoardList() {
     fetchBoards({ keyword, searchType });
   };
 
+  const handleLogout = () => {
+    // 로그아웃: localStorage에서 로그인 정보 제거
+    localStorage.removeItem('userId');
+    localStorage.removeItem('auto');
+    // 페이지 새로고침
+    window.location.reload();
+  };
+
   return (
-    <div style={{ margin: '0 20px' }}>
-      <h2>게시판 리스트</h2>
-      <table border="1" width="100%">
+    <div className={styles.boardListContainer}>
+      <h2 className={styles.boardListHeader}>게시판 리스트</h2>
+      <table className={styles.boardTable} border="1">
         <colgroup>
           <col style={{ width: '9%' }} />
           <col style={{ width: '45%' }} />
@@ -55,14 +64,14 @@ function BoardList() {
           {boards.map(board => (
             <tr key={board.boardIdx}>
               <td>{board.boardIdx}</td>
-              {/* 제목 클릭 시 상세페이지로 이동 */}
               <td><Link to={`/boardDetail/${board.boardIdx}`}>{board.title}</Link></td>
               <td>{board.memberId}</td>
               <td>{board.boardGood}</td>
-              {/* createdAt이 '2024-12-06T14:48:22' 형태라면 substring(0,10)으로 '2024-12-06' 추출 */}
-              <td>{board.createdAt 
-    ? board.createdAt.substring(0,10) + " / " + board.createdAt.substring(11,16) 
-    : ""}</td>
+              <td>
+                {board.createdAt 
+                  ? `${board.createdAt.substring(0,10)} / ${board.createdAt.substring(11,16)}`
+                  : ''}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -88,11 +97,15 @@ function BoardList() {
         <button onClick={handleSearch}>검색</button>
       </div>
 
-      {/* 글쓰기 버튼 */}
+      {/* 글쓰기 & 로그아웃 버튼 */}
       <div style={{ marginTop: '20px' }}>
         <Link to="/boardRegist">
           <button>글쓰기</button>
         </Link>
+        {/* 로그인 상태일 때만 로그아웃 버튼 표시 */}
+        {localStorage.getItem('userId') && (
+          <button onClick={handleLogout} className={styles.logoutButton}>로그아웃</button>
+        )}
       </div>
     </div>
   );

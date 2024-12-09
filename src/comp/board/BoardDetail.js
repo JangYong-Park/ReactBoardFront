@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import styles from './BoardDetail.module.css';
 
 function BoardDetail() {
   const { boardId } = useParams();
   const navigate = useNavigate();
   const [board, setBoard] = useState(null);
 
-  // 로그인한 사용자 ID(예: localStorage에 저장된 ID 사용)
-  const loggedInUserId = localStorage.getItem('memberId'); // 가정
+  const loggedInUserId = localStorage.getItem('memberId'); 
 
   useEffect(() => {
     fetchBoardDetail();
@@ -29,7 +29,7 @@ function BoardDetail() {
     axios.post('http://localhost:8080/api/board/good', { boardId: parseInt(boardId) })
       .then(res => {
         alert("추천되었습니다.");
-        fetchBoardDetail(); // 추천수 반영을 위해 상세 다시 로드
+        fetchBoardDetail();
       })
       .catch(err => {
         console.error(err);
@@ -38,9 +38,6 @@ function BoardDetail() {
   };
 
   const handleModify = () => {
-    // 수정 로직
-    // 수정 폼을 따로 만들거나 여기서 직접 변경 후 /api/board/modify 요청
-    // 여기서는 간단히 제목 변경 후 요청하는 예시
     const newTitle = prompt("새로운 제목을 입력하세요", board.title);
     if(!newTitle) return;
     axios.post('http://localhost:8080/api/board/modify', {
@@ -64,7 +61,7 @@ function BoardDetail() {
       axios.post('http://localhost:8080/api/board/remove', { boardId: parseInt(boardId) })
         .then(res => {
           alert("삭제 완료");
-          navigate('/boardList'); // 삭제 후 리스트로 이동
+          navigate('/boardList');
         })
         .catch(err => {
           console.error(err);
@@ -73,29 +70,44 @@ function BoardDetail() {
     }
   };
 
-  if(!board) return <div>로딩중...</div>;
+  if(!board) return <div className={styles.loading}>로딩중...</div>;
 
   return (
-    <div style={{ margin: '0 20px' }}>
-      <h2>게시글 상세보기</h2>
-      <p><b>제목:</b> {board.title}</p>
-      <p><b>작성자:</b> {board.memberId}</p>
-      <p><b>추천수:</b> {board.boardGood}</p>
-      <p><b>작성일:</b> {board.createdAt && board.createdAt.substring(0,10)}</p>
-      <div style={{ border: '1px solid #ccc', padding: '10px', minHeight: '100px' }}>
+    <div className={styles.container}>
+      <h2 className={styles.header}>게시글 상세보기</h2>
+
+      <div className={styles.infoGroup}>
+        <div className={styles.infoItem}>
+          <span className={styles.label}>제목:</span>
+          <span className={styles.value}>{board.title}</span>
+        </div>
+        <div className={styles.infoItem}>
+          <span className={styles.label}>작성자:</span>
+          <span className={styles.value}>{board.memberId}</span>
+        </div>
+        <div className={styles.infoItem}>
+          <span className={styles.label}>추천수:</span>
+          <span className={styles.value}>{board.boardGood}</span>
+        </div>
+        <div className={styles.infoItem}>
+          <span className={styles.label}>작성일:</span>
+          <span className={styles.value}>{board.createdAt && board.createdAt.substring(0,10)}</span>
+        </div>
+      </div>
+
+      <div className={styles.content}>
         {board.content}
       </div>
 
-      <div style={{ marginTop: '20px' }}>
-        <button onClick={handleRecommend}>추천하기</button>
-        {/* 로그인한 사용자와 작성자가 동일한 경우만 수정/삭제 버튼 노출 */}
+      <div className={styles.buttonContainer}>
+        <button className={`${styles.button} ${styles.recommendButton}`} onClick={handleRecommend}>추천하기</button>
         {loggedInUserId === board.memberId && (
           <>
-            <button onClick={handleModify} style={{ marginLeft: '10px' }}>수정하기</button>
-            <button onClick={handleRemove} style={{ marginLeft: '10px' }}>삭제하기</button>
+            <button className={`${styles.button} ${styles.modifyButton}`} onClick={handleModify}>수정하기</button>
+            <button className={`${styles.button} ${styles.deleteButton}`} onClick={handleRemove}>삭제하기</button>
           </>
         )}
-        <button onClick={() => navigate('/boardList')} style={{ marginLeft: '10px' }}>목록으로</button>
+        <button className={`${styles.button} ${styles.backButton}`} onClick={() => navigate('/boardList')}>목록으로</button>
       </div>
     </div>
   );

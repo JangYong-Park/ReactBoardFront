@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './BoardRegist.module.css';
 
 function BoardRegist() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [writer, setWriter] = useState('');    // 최종 memberId
-  const [tempNickname, setTempNickname] = useState(''); // 비로그인 상태에서 입력받을 닉네임
+  const [writer, setWriter] = useState('');
+  const [tempNickname, setTempNickname] = useState('');
 
-  // 컴포넌트가 마운트될 때 localStorage에서 userId 확인
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     if (userId) {
-      // 로그인된 상태
       setIsLoggedIn(true);
-      setWriter(userId); // 로그인 상태라면 writer는 userId 그대로
+      setWriter(userId);
     } else {
-      // 비로그인 상태
       setIsLoggedIn(false);
-      setWriter(''); // 비로그인 상태이므로 아직 writer 결정되지 않음
+      setWriter('');
     }
   }, []);
 
   const handleSubmit = () => {
     let finalWriter = writer;
-    // 비로그인 상태라면 tempNickname을 ""로 감싸서 writer로 사용
     if(!isLoggedIn) {
       finalWriter = `"${tempNickname}"`;
     }
@@ -41,6 +38,7 @@ function BoardRegist() {
         alert("게시글이 등록되었습니다.");
         setTitle('');
         setContent('');
+        setTempNickname('');
       })
       .catch(err => {
         console.error(err);
@@ -49,43 +47,45 @@ function BoardRegist() {
   };
 
   return (
-    <div>
-      <h2>게시글 등록</h2>
-      <div>
-        <label>작성자: </label>
+    <div className={styles.container}>
+      <h2 className={styles.header}>게시글 등록</h2>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>작성자</label>
         {isLoggedIn ? (
-          // 로그인 상태라면 userId를 그대로 표시 (예: hong)
-          <span>{writer}</span>
+          <div className={styles.writerDisplay}>{writer}</div>
         ) : (
-          // 비로그인 상태라면 닉네임 입력받기
           <input 
             type="text"
             placeholder="닉네임 입력"
             value={tempNickname}
             onChange={(e) => setTempNickname(e.target.value)} 
+            className={styles.input}
           />
         )}
       </div>
-      <div>
-        <label>제목: </label>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>제목</label>
         <input 
           type="text" 
           value={title} 
-          onChange={(e) => setTitle(e.target.value)} 
+          onChange={(e) => setTitle(e.target.value)}
+          className={styles.input} 
           required 
         />
       </div>
-      <div>
-        <label>내용: </label><br/>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>내용</label>
         <textarea 
           value={content}
           onChange={(e) => setContent(e.target.value)} 
           rows="5" 
-          cols="50"
+          className={styles.textarea}
           required 
         />
       </div>
-      <button onClick={handleSubmit}>등록하기</button>
+      <div className={styles.buttonContainer}>
+        <button className={styles.submitButton} onClick={handleSubmit}>등록하기</button>
+      </div>
     </div>
   );
 }

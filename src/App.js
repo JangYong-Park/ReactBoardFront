@@ -64,7 +64,7 @@ function Home() {
       <h1>Start Home</h1>
       <Link to="/about">About으로 이동</Link><br/>
       <Link to="/cal1">Cal1로 이동하기</Link><br/>
-
+    
       <h4>데이터 옮기기</h4>
       <Link to="/inp1">데이터 입력</Link><br/>
       <Link to="/oup1">데이터 출력</Link><br/>
