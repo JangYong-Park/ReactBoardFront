@@ -18,6 +18,8 @@ import BoardList from './comp/board/BoardList'
 import BoardRegist from './comp/board/BoardRegist'
 import BoardDetail from './comp/board/BoardDetail';
 
+import Red01 from './comp/red/Red01';
+
 
 function App() {
   return (
@@ -42,7 +44,11 @@ function App() {
           {/* 12.06 게시판 기능 추가 */}
           <Route path={"/boardList"} element={<BoardList />} />
           <Route path={"/boardRegist"} element={<BoardRegist />} />
-          <Route path="/boardDetail/:boardId" element={<BoardDetail />} />
+          <Route path={"/boardDetail/:boardId"} element={<BoardDetail />} />
+
+          <Route path={"/Red01"} element={<Red01 />} />
+
+
 
           </Routes>
       </BrowserRouter>
@@ -81,7 +87,9 @@ function Home() {
       {/* 게시판 기능 링크 추가 */}
       <h3>게시판 기능</h3>
       <Link to="/boardList">게시판</Link> <br/>
-      <Link to="/boardRegist">게시글 등록</Link>
+      <Link to="/boardRegist">게시글 등록</Link> <br/>
+
+      <Link to="/red01">리듀서 01</Link>
 
 
     </div>
