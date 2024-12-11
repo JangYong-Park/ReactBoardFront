@@ -16,9 +16,9 @@ import Ax1 from './comp/ax/ax01'
 // 12.06 이후 추가
 import BoardList from './comp/board/BoardList'
 import BoardRegist from './comp/board/BoardRegist'
-import BoardDetail from './comp/board/BoardDetail';
+import BoardDetail from './comp/board/BoardDetail'
 
-import Red01 from './comp/red/Red01';
+import Red from './comp/red/Red01'
 
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
           <Route path={"/boardRegist"} element={<BoardRegist />} />
           <Route path={"/boardDetail/:boardId"} element={<BoardDetail />} />
 
-          <Route path={"/Red01"} element={<Red01 />} />
+          <Route path={"/Red01"} element={<Red />} />
 
 
 
