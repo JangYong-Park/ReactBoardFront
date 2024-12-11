@@ -8,7 +8,7 @@ function BoardDetail() {
   const navigate = useNavigate();
   const [board, setBoard] = useState(null);
 
-  const loggedInUserId = localStorage.getItem('memberId'); 
+  const loggedInUserId = localStorage.getItem('userId'); 
 
   useEffect(() => {
     fetchBoardDetail();
@@ -72,6 +72,8 @@ function BoardDetail() {
 
   if(!board) return <div className={styles.loading}>로딩중...</div>;
 
+  const canEditOrDelete = (loggedInUserId === board.memberId) && (board.memberId !== 'anonymous');
+
   return (
     <div className={styles.container}>
       <h2 className={styles.header}>게시글 상세보기</h2>
@@ -101,7 +103,7 @@ function BoardDetail() {
 
       <div className={styles.buttonContainer}>
         <button className={`${styles.button} ${styles.recommendButton}`} onClick={handleRecommend}>추천하기</button>
-        {loggedInUserId === board.memberId && (
+        {canEditOrDelete && (
           <>
             <button className={`${styles.button} ${styles.modifyButton}`} onClick={handleModify}>수정하기</button>
             <button className={`${styles.button} ${styles.deleteButton}`} onClick={handleRemove}>삭제하기</button>

@@ -31,7 +31,7 @@ export default function Study() {
                 //다음 페이지 이동!
                 localStorage.setItem('userId', idValue);        //권한 등록
                 localStorage.setItem('auto', 'random  UUID JWT');
-                navigate('/itemList');      //아이템 리스트 이동
+                navigate('/boardList');      // 로그인 성공 시 게시판 리스트 페이지로 이동
             }
             else {
                 idRef.current.value = '';

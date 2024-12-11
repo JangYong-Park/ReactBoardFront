@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './BoardRegist.module.css';
+import { Navigate } from 'react-router-dom';
 
 function BoardRegist() {
   const [title, setTitle] = useState('');
@@ -8,29 +9,25 @@ function BoardRegist() {
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [writer, setWriter] = useState('');
-  const [tempNickname, setTempNickname] = useState('');
 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     if (userId) {
+      // 로그인된 상태
       setIsLoggedIn(true);
       setWriter(userId);
     } else {
+      // 비로그인 상태: 익명 계정 사용
       setIsLoggedIn(false);
-      setWriter('');
+      setWriter('anonymous');
     }
   }, []);
 
   const handleSubmit = () => {
-    let finalWriter = writer;
-    if(!isLoggedIn) {
-      finalWriter = `"${tempNickname}"`;
-    }
-
     const payload = {
       title: title,
       content: content,
-      memberId: finalWriter
+      memberId: writer // 로그인 안되어 있으면 anonymous 사용
     };
 
     axios.post("http://localhost:8080/api/board/regist", payload)
@@ -38,7 +35,6 @@ function BoardRegist() {
         alert("게시글이 등록되었습니다.");
         setTitle('');
         setContent('');
-        setTempNickname('');
       })
       .catch(err => {
         console.error(err);
@@ -54,13 +50,7 @@ function BoardRegist() {
         {isLoggedIn ? (
           <div className={styles.writerDisplay}>{writer}</div>
         ) : (
-          <input 
-            type="text"
-            placeholder="닉네임 입력"
-            value={tempNickname}
-            onChange={(e) => setTempNickname(e.target.value)} 
-            className={styles.input}
-          />
+          <div className={styles.writerDisplay}>익명(anonymous)</div>
         )}
       </div>
       <div className={styles.formGroup}>
