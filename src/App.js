@@ -18,7 +18,8 @@ import BoardList from './comp/board/BoardList'
 import BoardRegist from './comp/board/BoardRegist'
 import BoardDetail from './comp/board/BoardDetail'
 
-import Red from './comp/red/Red01'
+import Red1 from './comp/red/Red01'
+import Red2 from './comp/red/Red02'
 
 
 function App() {
@@ -46,7 +47,9 @@ function App() {
           <Route path={"/boardRegist"} element={<BoardRegist />} />
           <Route path={"/boardDetail/:boardId"} element={<BoardDetail />} />
 
-          <Route path={"/Red01"} element={<Red />} />
+          <Route path={"/red01"} element={<Red1 />} />
+          <Route path={"/red02"} element={<Red2 />} />
+
 
 
 
@@ -89,7 +92,10 @@ function Home() {
       <Link to="/boardList">게시판</Link> <br/>
       <Link to="/boardRegist">게시글 등록</Link> <br/>
 
-      <Link to="/red01">리듀서 01</Link>
+      {/* Reducer */}
+      <Link to="/red01">리듀서 01</Link> <br/>
+      <Link to="/red02">리듀서 02</Link> <br/>
+
 
 
     </div>
